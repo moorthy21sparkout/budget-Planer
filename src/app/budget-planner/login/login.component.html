@@ -1,0 +1,34 @@
+<div class="auth-container">
+    <h2 *ngIf="isLoginMode">Login</h2>
+    <h2 *ngIf="!isLoginMode">Register</h2>
+  
+    <form [formGroup]="isLoginMode ? loginForm : registerForm" (ngSubmit)="isLoginMode ? onLogin() : onRegister()">
+      <div *ngIf="!isLoginMode">
+        <label for="name">Name:</label>
+        <input id="name" formControlName="name" />
+        <div *ngIf="registerForm.get('name')?.invalid && registerForm.get('name')?.touched">
+          <small>Name is required.</small>
+        </div>
+      </div>
+  
+      <label for="password">Password:</label>
+      <input id="password" type="password" formControlName="password" />
+      <div *ngIf="(isLoginMode ? loginForm : registerForm).get('password')?.invalid && (isLoginMode ? loginForm : registerForm).get('password')?.touched">
+        <small *ngIf="(isLoginMode ? loginForm : registerForm).get('password')?.errors?.['required']">Password is required.</small>
+        <small *ngIf="(isLoginMode ? loginForm : registerForm).get('password')?.errors?.['minlength']">Password must be at least 6 characters long.</small>
+      </div>
+  
+      <label for="password">Password:</label>
+      <input id="password" type="password" formControlName="password" />
+      <div *ngIf="(isLoginMode ? loginForm : registerForm).get('password')?.invalid && (isLoginMode ? loginForm : registerForm).get('password')?.touched">
+        <small>Password is required.</small>
+      </div>
+  
+      <button type="submit">{{ isLoginMode ? 'Login' : 'Register' }}</button>
+    </form>
+  
+    <button (click)="toggleMode()">
+      Switch to {{ isLoginMode ? 'Register' : 'Login' }}
+    </button>
+  </div>
+  
